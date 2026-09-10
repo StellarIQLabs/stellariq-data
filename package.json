@@ -4,12 +4,29 @@
   "private": true,
   "description": "StellarIQ Data & Intelligence layer (stellariq-data): indexer, price engine, analytics engine, routing engine",
   "type": "module",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "lint": "eslint ./scripts ./database --ext .mjs,.js,.cjs 2>/dev/null || eslint scripts database",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "tsc -b tsconfig.json || tsc --noEmit -p tsconfig.json",
     "test": "node --test tests/unit/*.test.mjs tests/integration/*.test.mjs 2>/dev/null || node --test tests/"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "eslint": "^10.10.0",
+    "prettier": "^3.9.6",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "debug": "^4.4.3",
+    "drizzle-orm": "^0.45.2",
+    "ioredis": "^6.0.0",
+    "postgres": "^3.4.9"
+  }
 }

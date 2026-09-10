@@ -1,0 +1,61 @@
+# Local startup order: postgres + redis first (healthy), then data services.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: stellariq
+      POSTGRES_PASSWORD: stellariq
+      POSTGRES_DB: stellariq
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stellariq"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  indexer:
+    build: { context: ., dockerfile: apps/indexer/Dockerfile }
+    env_file: .env.example
+    environment:
+      DATABASE_URL: postgres://stellariq:stellariq@postgres:5432/stellariq
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  price-engine:
+    build: { context: ., dockerfile: apps/price-engine/Dockerfile }
+    env_file: .env.example
+    environment:
+      DATABASE_URL: postgres://stellariq:stellariq@postgres:5432/stellariq
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  analytics-engine:
+    build: { context: ., dockerfile: apps/analytics-engine/Dockerfile }
+    env_file: .env.example
+    environment:
+      DATABASE_URL: postgres://stellariq:stellariq@postgres:5432/stellariq
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  routing-engine:
+    build: { context: ., dockerfile: apps/routing-engine/Dockerfile }
+    env_file: .env.example
+    environment:
+      DATABASE_URL: postgres://stellariq:stellariq@postgres:5432/stellariq
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }

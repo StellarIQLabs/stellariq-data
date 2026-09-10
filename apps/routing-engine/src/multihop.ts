@@ -3,18 +3,6 @@
 import type { PoolLiquidity, Route } from "./types.js";
 import { findDirectRoutes } from "./direct.js";
 
-function applyHop(pool: PoolLiquidity, inputAsset: string, amountIn: number): { outputAsset: string; output: number } | null {
-  const forward = pool.tokenA === inputAsset;
-  const backward = pool.tokenB === inputAsset;
-  if (!forward && !backward) return null;
-  const reserveIn = forward ? pool.reserveA : pool.reserveB;
-  const reserveOut = forward ? pool.reserveB : pool.reserveA;
-  if (!(reserveIn > 0) || !(reserveOut > 0) || !(amountIn > 0)) return null;
-  const feeFactor = 1 - pool.feeBps / 10_000;
-  const output = ((amountIn * feeFactor) * reserveOut) / (reserveIn + amountIn * feeFactor);
-  return { outputAsset: forward ? pool.tokenB : pool.tokenA, output };
-}
-
 export function findMultihopRoutes(
   inputAsset: string,
   outputAsset: string,
@@ -32,12 +20,6 @@ export function findMultihopRoutes(
   for (const middle of candidates) {
     const firstLegs = findDirectRoutes(inputAsset, middle, inputAmount, pools);
     for (const first of firstLegs.slice(0, 2)) {
-      const hop = applyHop(
-        pools.find((p) => p.poolId === first.legs[0]?.poolId) as PoolLiquidity,
-        inputAsset,
-        inputAmount,
-      );
-      void hop;
       const secondLegs = findDirectRoutes(middle, outputAsset, Number(first.outputAmount), pools);
       for (const second of secondLegs.slice(0, 2)) {
         routes.push({

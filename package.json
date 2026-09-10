@@ -11,8 +11,8 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "build": "tsc -b tsconfig.json || tsc --noEmit -p tsconfig.json",
-    "test": "node --test tests/unit/*.test.mjs tests/integration/*.test.mjs 2>/dev/null || node --test tests/"
+    "build": "tsc -p tsconfig.build.json",
+    "test": "npm run build && node --test tests/"
   },
   "engines": {
     "node": ">=20"

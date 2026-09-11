@@ -1,4 +1,4 @@
-# stellariq-contract (stellariq-data) — Data & Intelligence Layer
+# stellariq-data — Data & Intelligence Layer
 
 The core intelligence engine of StellarIQ: Stellar indexing, protocol
 adapters, price aggregation, analytics, and route evaluation. It feeds the
@@ -6,7 +6,7 @@ public API in `stellariq-app` (which consumes it through its `DataSource` seam
 and its internal API).
 
 ```
-stellariq-contract/
+stellariq-data/
 ├── apps/
 │   ├── indexer/           # Ledger + Soroban event ingest (pollers, RPC, checkpoint resume)
 │   ├── price-engine/      # VWAP / median aggregation with outlier rejection

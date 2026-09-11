@@ -1,5 +1,5 @@
 {
-  "name": "stellariq-contract",
+  "name": "stellariq-data",
   "version": "0.1.0",
   "private": true,
   "description": "StellarIQ Data & Intelligence layer (stellariq-data): indexer, price engine, analytics engine, routing engine",

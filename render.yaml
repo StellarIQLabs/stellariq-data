@@ -1,0 +1,20 @@
+# Render blueprint for the stellariq-data internal API (Fastify-free, node:http).
+# Serves assets, prices, markets, pools, swaps, analytics and routes computed by
+# the data engines over seeded testnet reserves. stellariq-app points its
+# DATA_API_URL at this service to go end to end.
+#
+# Free-tier note: the service sleeps after ~15 min idle; the first request after
+# inactivity cold-starts (~30-60s). A health pinger keeps it warm for reviews.
+services:
+  - type: web
+    name: stellariq-data-api
+    runtime: docker
+    dockerfilePath: ./apps/internal-api/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: LOG_LEVEL
+        value: info

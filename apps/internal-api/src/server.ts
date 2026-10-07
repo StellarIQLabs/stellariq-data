@@ -1,6 +1,6 @@
 // Internal data API: the REST contract consumed by stellariq-app through its
 // RemoteDataSource (DATA_API_URL). Every response is computed by the engines in
-// this repo over seeded testnet reserves — see dataset.ts.
+// this repo over seeded testnet reserves - see dataset.ts.
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
 import { createLogger } from "../../../packages/core/src/logger.js";
 import { dataset } from "./dataset.js";

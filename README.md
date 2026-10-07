@@ -1,4 +1,4 @@
-# stellariq-data — Data & Intelligence Layer
+# stellariq-data - Data & Intelligence Layer
 
 The core intelligence engine of StellarIQ: Stellar indexing, protocol
 adapters, price aggregation, analytics, and route evaluation. It feeds the
@@ -62,20 +62,20 @@ analytics-engine `4103`, routing-engine `4104`, internal-api `4110`.
 
 Cross-package imports are relative (`../../../packages/core/src/…`); compiled
 output lands in `dist/` mirroring the repo tree (see `tsconfig.build.json`),
-so services run as `node dist/apps/<name>/src/index.js` — exactly what the
+so services run as `node dist/apps/<name>/src/index.js` - exactly what the
 per-service Dockerfiles do (multi-stage, non-root `stellariq` user,
 file-presence healthcheck).
 
 ## Packages
 
-- **`@stellariq/core`** — `getConfig()` (env validation), structured logger,
+- **`@stellariq/core`** - `getConfig()` (env validation), structured logger,
   Redis cache helpers, queue definitions (`QUEUES.ledgers`, …) + client, key
   helpers.
-- **`@stellariq/adapters`** — adapter interface plus ledger/event decoding
+- **`@stellariq/adapters`** - adapter interface plus ledger/event decoding
   shared by the indexer.
-- **`@stellariq/models`** — table models for assets, markets, pools, swaps,
+- **`@stellariq/models`** - table models for assets, markets, pools, swaps,
   prices and candles.
-- **`@stellariq/protocols`** — per-protocol integrations (Stellar DEX incl.
+- **`@stellariq/protocols`** - per-protocol integrations (Stellar DEX incl.
   trades, Soroswap, Phoenix, Aquarius) behind a registry, with shared AMM math.
 
 ## Database
@@ -95,7 +95,7 @@ the migrator (`migrate.ts`, drizzle, lexical order over
 | `REDIS_URL`                                                                                                  | `redis://localhost:6379`                                  | Queues + caches                                     |
 | `STELLAR_RPC_URL` / `HORIZON_URL`                                                                            | Soroban/Horizon testnet                                   | Ledger + event sources                              |
 | `NETWORK_PASSPHRASE`                                                                                         | `Test SDF Network ; September 2015`                       | Stellar network identity                            |
-| `INDEXER_PORT` / `PRICE_ENGINE_PORT` / `ANALYTICS_ENGINE_PORT` / `ROUTING_ENGINE_PORT` / `INTERNAL_API_PORT` | `4101`–`4104`, `4110`                                     | Service ports                                       |
+| `INDEXER_PORT` / `PRICE_ENGINE_PORT` / `ANALYTICS_ENGINE_PORT` / `ROUTING_ENGINE_PORT` / `INTERNAL_API_PORT` | `4101`-`4104`, `4110`                                     | Service ports                                       |
 
 ## Scripts
 
@@ -104,14 +104,14 @@ the migrator (`migrate.ts`, drizzle, lexical order over
 | `npm run build`     | `tsc -p tsconfig.build.json` → `dist/` (no declarations)                                                                                |
 | `npm run typecheck` | `tsc --noEmit` over the full workspace                                                                                                  |
 | `npm run lint`      | ESLint (flat config)                                                                                                                    |
-| `npm test`          | build, then `node --test tests/` — unit suites (`vwap`, `outlier`, `routing`, `adapters`, `signals`) plus the integration pipeline test |
+| `npm test`          | build, then `node --test tests/` - unit suites (`vwap`, `outlier`, `routing`, `adapters`, `signals`) plus the integration pipeline test |
 
 ## How stellariq-app consumes this repo
 
 `stellariq-app` never imports this code directly. Its API reads through a
 `DataSource` interface backed by a mock seed dataset, and its frontend/SDK hit
 the public REST/WS surface. Swap in this layer by pointing the app at the
-internal API (`DATA_API_URL`) — the response shapes already match the mock.
+internal API (`DATA_API_URL`) - the response shapes already match the mock.
 
 ## License
 

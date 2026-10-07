@@ -1,5 +1,5 @@
 // Fee accounting + net-output ranking: protocol fees and network fees are
-// computed per route, and routes rank by net output — never by lowest fee.
+// computed per route, and routes rank by net output - never by lowest fee.
 import type { Route } from "./types.js";
 
 export const NETWORK_FEE_XLM = 0.00001;

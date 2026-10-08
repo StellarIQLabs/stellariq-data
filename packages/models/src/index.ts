@@ -4,3 +4,4 @@ export * from "./pools.js";
 export * from "./swaps.js";
 export * from "./prices.js";
 export * from "./candles.js";
+export * from "./donations.js";

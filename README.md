@@ -8,6 +8,8 @@ route evaluation used to value donations and convert a donor's asset into the
 token a charity accepts. It feeds the public API in `stellariq-app` (through
 its `DataSource` seam and the internal API).
 
+**Live demo:** https://stellariq-web.vercel.app (testnet) | **API:** https://stellariq-api-p1hz.onrender.com/docs
+
 | Piece | Where |
 | --- | --- |
 | Donation event decoder and per-campaign aggregation | `packages/protocols/src/donations.ts` |

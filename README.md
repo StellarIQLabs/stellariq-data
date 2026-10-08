@@ -1,9 +1,18 @@
-# stellariq-data - Data & Intelligence Layer
+# stellariq-data - Data layer for StellarIQ Give
 
-The core intelligence engine of StellarIQ: Stellar indexing, protocol
-adapters, price aggregation, analytics, and route evaluation. It feeds the
-public API in `stellariq-app` (which consumes it through its `DataSource` seam
-and its internal API).
+The indexing and analytics engine behind **StellarIQ Give**, transparent
+charity donations on Stellar. It decodes donation events from the StellarIQ
+Give contract (`campaign_created`, `donation_made`, `campaign_closed`) into
+campaign and donation tables, and provides the price feeds, liquidity data and
+route evaluation used to value donations and convert a donor's asset into the
+token a charity accepts. It feeds the public API in `stellariq-app` (through
+its `DataSource` seam and the internal API).
+
+| Piece | Where |
+| --- | --- |
+| Donation event decoder and per-campaign aggregation | `packages/protocols/src/donations.ts` |
+| Campaign and donation tables | `packages/models/src/donations.ts`, `database/migrations/0007_donations.sql` |
+| Donations contract (testnet) | [`CBCHKIDR...F2KX`](https://stellar.expert/explorer/testnet/contract/CBCHKIDRFJ4KO2DGJEP75NJPYN65YVD6QOVVHC5IU7PRTHGHW75OF2KX) |
 
 ```
 stellariq-data/
@@ -17,9 +26,9 @@ stellariq-data/
 │   ├── core/              # Config, logger, Redis cache, queues, key helpers
 │   ├── adapters/          # Ledger/event decoding adapters
 │   ├── models/            # Asset, market, pool, swap, price, candle models
-│   └── protocols/         # Stellar DEX, Soroswap, Phoenix, Aquarius + registry/math
+│   └── protocols/         # Stellar DEX, Soroswap, Phoenix, Aquarius, Give donations + registry/math
 ├── database/              # Postgres client, config, drizzle-run migrations
-│   └── migrations/        # 0001_assets … 0006_indexes
+│   └── migrations/        # 0001_assets ... 0007_donations
 ├── scripts/               # backfill.mjs and ops helpers
 ├── tests/                 # unit/* + integration/pipeline (node:test)
 └── docker-compose.yml     # postgres + redis + engine services for local dev

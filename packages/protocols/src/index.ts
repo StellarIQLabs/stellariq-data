@@ -5,3 +5,4 @@ export * from "./phoenix.js";
 export * from "./aquarius.js";
 export * from "./math.js";
 export * from "./registry.js";
+export * from "./donations.js";
